@@ -30,7 +30,7 @@ async def on_message(message):
     print(f'Message {user_message} by {username} on {channel}')
   
   
-    if channel == "bot":
+    if channel == "bot" or "jukebox-jumbo":
         params = user_message.split(' ')
         prediction = predict(api_key, int(params[0]), float(params[1]), int(params[2]))
         await message.channel.send(prediction)
