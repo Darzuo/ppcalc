@@ -11,9 +11,8 @@ import numpy as np
 load_dotenv()
 
 client = discord.Client()
-token = os.getenv('TOKEN')
-
-api_key = "d396c636e41fdef810245ce181d66cfd603aa3ea"
+token = os.getenv('DISCORD_TOKEN')
+api_key = os.getenv("OSU_TOKEN")
 
 print(type(token))
 
