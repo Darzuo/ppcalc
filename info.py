@@ -1,8 +1,11 @@
-calc_instr = 'calc <beatmap link> <acc> <combo> - gives a pp estimate for a given map, accuracy (0-100), and max combo \n\
-calc <beatmap link> - gives an FC perfect accuracy estimate for a given map'
+calc_instr = 'calc <mods (optional)> <beatmap link> <acc> <combo> - gives a pp estimate for given mods, beatmap link, accuracy (0-100), and max combo \n\
+calc <mods (optional)> <beatmap link> - gives an SS pp estimate for a given map\n\
+mods must be inputted as a combination of hd hr dt fl (ex. hdhr)'
 
 help_instr = 'help - displays all commands and usages \n\
 help <command> - dispalys usage of a particular command'
+
+colors = {'osu_pink': 0xff66aa, 'error_red': 0xff0033}
 
 
 commands = ['help', 'calc']
@@ -14,8 +17,9 @@ for i in range(len(commands)):
     instruction_dict[commands[i]] = instructions[i]
 
 instruction_str = ''
-for instruction in instructions:
-    instruction_str = instruction_str + instruction + '\n'
+for command, instruction in instruction_dict.items():
+    instruction_str += "**" + command + "**" + '\n'
+    instruction_str += instruction + '\n\n'
 
 
 help = f'''
