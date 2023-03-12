@@ -69,7 +69,6 @@ async def __calc(message, mods, link, acc, combo, api_key):
     text = f"Estimated pp: {prediction}"
     return await __send_embed(message, "", pink, text)
 
-async def best(message, params):
 
 
 async def __send_error(message, text):
@@ -94,6 +93,7 @@ def __parsemods(mods):
             return mod_dict[mod] + parsed_val
     
     return -1
+
 
 def __get_map(api_key, id):
 
