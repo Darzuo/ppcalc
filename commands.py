@@ -36,7 +36,7 @@ async def calc(message, params):
 
         link = params[0]
         id = int(link.split('/')[-1])
-        map = request(api_key=api_key)
+        map = request(api_key=api_key, id=id)
         
         acc = float(params[1])
         combo = int(params[2])
