@@ -33,7 +33,7 @@ async def calc(message, params):
     if len(params) == 1:
         return await __calc(message, "", params[0], 100, -1, api_key)
 
-    if len(params) == 2:
+    elif len(params) == 2:
         return await __calc(message, params[0], params[1], 100, -1, api_key)
     
     elif len(params) == 3:
@@ -69,7 +69,16 @@ async def __calc(message, mods, link, acc, combo, api_key):
     text = f"Estimated pp: {prediction}"
     return await __send_embed(message, "", pink, text)
 
+async def best(message, params):
+    load_dotenv()
+    api_key = os.getenv("OSU_TOKEN")
 
+    if len(params) == 1:
+        best = __get_best(api_key=api_key, username=params[0])
+        # TODO: send info about top score
+    else:
+        text = f'Invalid command, see usage:\n{info.best_instr}'
+        return await __send_error(message, text)
 
 async def __send_error(message, text):
     return await message.channel.send(embed=discord.Embed(title='Error', color=red, description=text))
@@ -94,6 +103,15 @@ def __parsemods(mods):
     
     return -1
 
+def __get_best(api_key, username):
+
+    params = {"k": api_key,
+              "u": username, 
+              "m": 0,
+              "limit": 1}
+    
+    best = requests.get(f"https://osu.ppy.sh/api/get_user_best", params=params).json()[0]
+    return best
 
 def __get_map(api_key, id):
 

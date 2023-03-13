@@ -1,15 +1,17 @@
+help_instr = 'help - displays all commands and usages \n\
+help <command> - dispalys usage of a particular command'
+
 calc_instr = 'calc <mods (optional)> <beatmap link> <acc> <combo> - gives a pp estimate for given mods, beatmap link, accuracy (0-100), and max combo \n\
 calc <mods (optional)> <beatmap link> - gives an SS pp estimate for a given map\n\
 mods must be inputted as a combination of hd hr dt fl (ex. hdhr)'
 
-help_instr = 'help - displays all commands and usages \n\
-help <command> - dispalys usage of a particular command'
+best_instr = 'best <username / id> - displays the best play for a given user'
 
 colors = {'osu_pink': 0xff66aa, 'error_red': 0xff0033}
 
 
-commands = ['help', 'calc']
-instructions = [help_instr, calc_instr]
+commands = ['help', 'calc', 'best']
+instructions = [help_instr, calc_instr, best_instr]
 
 instruction_dict = dict()
 
