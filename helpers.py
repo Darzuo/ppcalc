@@ -34,9 +34,6 @@ async def calc(message, mods, link, acc, combo, api_key):
     if mod_val == -1:
         text = f"{mods} is not a valid mod input, see usage:\n{info.calc_instr}"
         return await send_error(message, text)
-    if mod_val != 0 and mod_val != 8:
-        text = f"placeholder: prediction with mod_val {mod_val}"
-        return await send_embed(message=message, text=text)
     prediction = predict(map, acc, combo, mod_val)
 
     text = f"Estimated pp: {prediction}"
@@ -112,7 +109,7 @@ def get_best(api_key, username):
               "u": username, 
               "m": 0,
               "limit": 1}
-    
+    # TODO: verify username
     best = requests.get(f"https://osu.ppy.sh/api/get_user_best", params=params).json()[0]
     return best
 
