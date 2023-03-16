@@ -5,7 +5,7 @@ calc_instr = '- calc <mods (optional)> <beatmap link> <acc> <combo> - gives a pp
 - calc <mods (optional)> <beatmap link> - gives an SS pp estimate for a given map\n\
 mods must be inputted as a combination of hd hr dt fl (ex. hdhr)'
 
-best_instr = '- best <username / id> - displays the best play for a given user'
+best_instr = '- best <username | id> - displays the best play for a given user'
 
 colors = {'pink': 0xff66aa, 'red': 0xff0033}
 
@@ -26,8 +26,8 @@ for command, instruction in instruction_dict.items():
 
 
 help = f'''
-ppcalc is a Discord Bot made for calculating pp scores in the game Osu!
-Here are some commands that are currently available!
+Welcome to ppcalc!
+Here are the commands that are currently available!
 
 {instruction_str}
 '''

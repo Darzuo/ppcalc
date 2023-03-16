@@ -38,7 +38,9 @@ async def calc(message, mods, link, acc, combo, api_key):
         text = f"placeholder: prediction with mod_val {mod_val}"
         return await send_embed(message=message, text=text)
     prediction = predict(map, acc, combo, mod_val)
+
     text = f"Estimated pp: {prediction}"
+    
     return await send_embed(message=message, text=text)
 
 def parsemods(mods):
