@@ -3,6 +3,8 @@ import info
 import requests
 import numpy as np
 from joblib import load
+import pickle
+from sklearn.preprocessing import PolynomialFeatures
 
 red=info.colors['red']
 pink=info.colors['pink']
@@ -76,7 +78,8 @@ def parsemodval(mod_val):
 
 
 def predict(map, acc, combo, mod_val):
-    linreg = load(f"models/linreg{mod_val}.joblib")
+    model = load(f"models/model{mod_val}.joblib")
+    polys = load("models/model_info")
 
     data = [float(map['diff_overall']),
             float(map['diff_approach']),
@@ -89,8 +92,11 @@ def predict(map, acc, combo, mod_val):
             float(int(map['max_combo'])-combo)/float(combo)]
 
     X = np.asarray(data).reshape(-1, len(data))
+    if (mod_val) in polys:
+        poly_feats = PolynomialFeatures(degree=2)
+        X = poly_feats.fit_transform(X)
 
-    pred = np.exp(linreg.predict(X))[0]
+    pred = np.exp(model.predict(X))[0]
 
     return int(pred)
 
