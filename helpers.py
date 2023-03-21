@@ -115,9 +115,10 @@ def get_best(api_key, username):
               "u": username, 
               "m": 0,
               "limit": 1}
-    # TODO: verify username
-    best = requests.get(f"https://osu.ppy.sh/api/get_user_best", params=params).json()[0]
-    return best
+    best = requests.get(f"https://osu.ppy.sh/api/get_user_best", params=params).json()
+    if len(best) == 0:
+        return best
+    return best[0]
 
 def get_map(api_key, id):
 

@@ -40,8 +40,10 @@ async def best(message, params):
     api_key = os.getenv("OSU_TOKEN")
 
     if len(params) == 1:
-        best = helpers.get_best(api_key=api_key, username=params[0])
-        # TODO: send info about top score
+        username = params[0]
+        best = helpers.get_best(api_key=api_key, username=username)
+        if len(best) == 0:
+            await helpers.send_error(message=message, text=f"{username} is not a valid username or user id, please try again")
 
         map = helpers.get_map(api_key=api_key, id=best['beatmap_id'])
         
@@ -58,7 +60,6 @@ async def best(message, params):
         beatmapset_id = map['beatmapset_id']
         thumbnail = f'https://b.ppy.sh/thumb/{beatmapset_id}l.jpg'
         
-
         text=f'*{difficulty}* \n\n\
         Mods: {mods} \n\
         Combo: {combo} / {max_combo} \n\

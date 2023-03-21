@@ -7,7 +7,6 @@ import info
 import commands
 import helpers
 
-
 load_dotenv()
 
 client = discord.Client()
@@ -17,7 +16,6 @@ api_key = os.getenv("OSU_TOKEN")
 @client.event
 async def on_ready():
     print(f"{client.user} connected!")
-
     
 @client.event
 async def on_message(message):
