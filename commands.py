@@ -3,10 +3,12 @@ from dotenv import load_dotenv
 import info
 import helpers
 
+
 async def help(message, params):
     if len(params) == 0:
         text = info.help
         return await helpers.send_embed(interaction=message, text=text)
+
 
 async def calc(interaction, params):
 
@@ -20,6 +22,7 @@ async def calc(interaction, params):
 
     return await helpers.calc(interaction, link, mods, acc, combo, api_key)
 
+
 async def best(interaction, params):
     load_dotenv()
     api_key = os.getenv("OSU_TOKEN")
@@ -30,7 +33,7 @@ async def best(interaction, params):
         await helpers.send_error(interaction=interaction, text=f"{user} is not a valid username or user id, please try again")
 
     map = helpers.get_map(api_key=api_key, id=best['beatmap_id'])
-    
+
     mod_val = int(best['enabled_mods'])
     mods = helpers.parsemodval(mod_val)
     combo = best['maxcombo']
@@ -38,13 +41,13 @@ async def best(interaction, params):
     title = map['title']
     difficulty = map['version']
     max_combo = map['max_combo']
-    acc = str(round(helpers.acc(best)*100, 2))+'%'
+    acc = str(round(helpers.acc(best) * 100, 2)) + '%'
     pp = str(round(float(best['pp'])))
-    
+
     beatmapset_id = map['beatmapset_id']
     thumbnail = f'https://b.ppy.sh/thumb/{beatmapset_id}l.jpg'
-    
-    text=f'*{difficulty}* \n\n\
+
+    text = f'*{difficulty}* \n\n\
     Mods: {mods} \n\
     Combo: {combo} / {max_combo} \n\
     Accuracy: {acc} \n\

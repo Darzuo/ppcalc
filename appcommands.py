@@ -2,11 +2,13 @@
 import os
 import requests
 from dotenv import load_dotenv
+import info
+
 load_dotenv()
 
 token = os.getenv('DISCORD_TOKEN')
 api_key = os.getenv("OSU_TOKEN")
-import info
+
 
 url = "https://discord.com/api/v10/applications/1083614941476560966/commands"
 
@@ -20,7 +22,7 @@ commands = [
         "name": "pphelp",
         "type": 1,
         "description": info.help_info,
-        "options":[]
+        "options": []
     },
     {
         "name": "ppcalc",

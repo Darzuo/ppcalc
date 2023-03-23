@@ -21,6 +21,7 @@ async def on_interaction(interaction):
         params = helpers.parse_params(options)
         await commands.commands[command_name](interaction, params)
 
+
 @client.event
 async def on_ready():
     print(f"{client.user} connected!")
