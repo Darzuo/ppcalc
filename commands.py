@@ -106,5 +106,6 @@ commands = {
     "pphelp": help,
     "ppcalc": calc,
     "ppbest": best,
-    "pprec": rec
+    "pprec": rec,
+    "pp": help
 }

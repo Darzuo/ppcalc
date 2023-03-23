@@ -19,6 +19,12 @@ headers = {
 
 commands = [
     {
+        "name": "pp",
+        "type": 1,
+        "description": info.help_info,
+        "options": []
+    },
+    {
         "name": "pphelp",
         "type": 1,
         "description": info.help_info,
