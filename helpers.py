@@ -20,7 +20,7 @@ async def send_embed(message, text, color='pink', title="", thumbnail=None, imag
         embed.set_thumbnail(url=thumbnail)
     return await message.channel.send(embed=embed)
 
-async def calc(message, mods, link, acc, combo, api_key):
+async def calc(message, link, mods, acc, combo, api_key):
     
     if 'osu.ppy.sh' not in link:
         text = f'"{link}" is not a valid osu beatmap link, please try again'
@@ -108,6 +108,12 @@ def acc(score):
     total = perf+mid+low+miss
     acc = float(300*perf+100*mid+50*low)/(300*total)
     return acc
+    
+def parse_params(params):
+    out = {}
+    for param in params:
+        out[param['name']] = param['value']
+    return out
 
 def get_best(api_key, username):
 

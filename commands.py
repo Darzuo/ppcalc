@@ -17,23 +17,17 @@ async def help(message, params):
             text = f"{command} is not a valid command, type \"!pp help\" for a list of valid commands"
             return await helpers.send_error(message, text)
 
-async def calc(message, params):
-     
+async def calc(interaction, params):
+
     load_dotenv()
     api_key = os.getenv("OSU_TOKEN")
-    
-    if len(params) == 1:
-        return await helpers.calc(message, "", params[0], 100, -1, api_key)
 
-    elif len(params) == 2:
-        return await helpers.calc(message, params[0], params[1], 100, -1, api_key)
+    link = params['beatmap_link']
+    mods = params['mods'] if 'mods' in params.keys() else ""
+    acc = params['accuracy'] if 'accuracy' in params.keys() else 100
+    combo = params['max_combo'] if 'max_combo' in params.keys() else -1
     
-    elif len(params) == 3:
-        return await helpers.calc(message, "", params[0], float(params[1]), int(params[2]), api_key)
-    
-    elif len(params) == 4:
-        return await helpers.calc(message, params[0], params[1], float(params[2]), int(params[3]), api_key)
-
+    return await helpers.calc(interaction, link, mods, acc, combo, api_key)
 
 async def best(message, params):
     load_dotenv()

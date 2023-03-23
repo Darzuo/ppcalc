@@ -7,6 +7,9 @@ Note: mods must be inputted as a combination of hd hr dt fl (ex. hdhr)'
 
 best_instr = '**!pp best <username | id>** - displays the best play for a given user'
 
+help_info = 'displays all commands and usages or usage for a single command'
+calc_info = 'gives a pp estimate for given mods, beatmap link, accuracy, and max combo'
+
 colors = {'pink': 0xff66aa, 'red': 0xff0033}
 
 param_nums = {'help': {0,1}, 'calc': {1,2,3,4}, 'best': {1}}

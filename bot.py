@@ -7,11 +7,22 @@ import info
 import commands
 import helpers
 
+
 load_dotenv()
 
 client = discord.Client()
 token = os.getenv('DISCORD_TOKEN')
 api_key = os.getenv("OSU_TOKEN")
+
+
+@client.event
+async def on_interaction(interaction):
+    if str(interaction.type) == "InteractionType.application_command":
+        command_name = interaction.data['name']
+        options = interaction.data['options']
+        params = helpers.parse_params(options)
+        if command_name == "ppcalc":
+            await commands.calc(interaction, params)
 
 @client.event
 async def on_ready():
