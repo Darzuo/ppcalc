@@ -19,6 +19,12 @@ headers = {
 
 commands = [
     {
+        "name": "pp",
+        "type": 1,
+        "description": info.help_info,
+        "options": []
+    },
+    {
         "name": "pphelp",
         "type": 1,
         "description": info.help_info,
@@ -51,7 +57,7 @@ commands = [
                 "name": "max_combo",
                 "description": "max combo received",
                 "type": 4,
-                "required": False,
+                "required": False
             }
         ]
     },
@@ -64,8 +70,33 @@ commands = [
                 "name": "user",
                 "description": "osu username or user id",
                 "type": 3,
-                "required": True,
+                "required": True
+            }
+        ]
+    },
+    {
+        "name": "pprec",
+        "type": 1,
+        "description": info.rec_info,
+        "options": [
+            {
+                "name": "user",
+                "description": "osu username or user id",
+                "type": 3,
+                "required": True
             },
+            {
+                "name": "mods",
+                "description": "mods as a combination of hd hr dt fl (ex. hdhr)",
+                "type": 3,
+                "required": False
+            },
+            {
+                "name": "max_length",
+                "description": "max song length in seconds (min 30s, note that shorter length maps may take longer to find)",
+                "type": 4,
+                "required": False
+            }
         ]
     }
 ]

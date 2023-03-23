@@ -4,6 +4,7 @@ import requests
 import numpy as np
 from joblib import load
 from sklearn.preprocessing import PolynomialFeatures
+from random import randint
 
 red = info.colors['red']
 pink = info.colors['pink']
@@ -22,6 +23,15 @@ async def send_embed(interaction, text, color='pink', title="", thumbnail=None, 
     return await interaction.response.send_message(embed=embed)
 
 
+async def followup_send_embed(interaction, text, color='pink', title="", thumbnail=None, image=None):
+    embed = discord.Embed(title=title, color=info.colors[color], description=text)
+    if image is not None:
+        embed.set_image(url=image)
+    if thumbnail is not None:
+        embed.set_thumbnail(url=thumbnail)
+    return await interaction.followup.send(embed=embed)
+
+
 async def calc(interaction, link, mods, acc, combo, api_key):
 
     if 'osu.ppy.sh' not in link:
@@ -34,9 +44,9 @@ async def calc(interaction, link, mods, acc, combo, api_key):
     if combo == -1:
         combo = int(map['max_combo'])
 
-    mod_val = parsemods(mods)
+    mod_val = parse_mods(mods)
     if mod_val == -1:
-        text = f"{mods} is not a valid mod input, see usage:\n{info.calc_instr}"
+        text = f"{mods} is not a valid mod input, mods must be inputted as a combination of hd hr dt fl (ex. hdhr)"
         return await send_error(interaction, text)
     prediction = predict(map, acc, combo, mod_val)
 
@@ -45,7 +55,7 @@ async def calc(interaction, link, mods, acc, combo, api_key):
     return await send_embed(interaction=interaction, text=text)
 
 
-def parsemods(mods):
+def parse_mods(mods):
     mod_dict = {"hd": 8, "dt": 64, "hr": 16, "fl": 1024}
 
     if mods.replace("*", "") == "":
@@ -55,14 +65,14 @@ def parsemods(mods):
 
     for mod in mod_dict.keys():
         if mod in mods:
-            parsed_val = parsemods(mods.replace(mod, "*"))
+            parsed_val = parse_mods(mods.replace(mod, "*"))
             if parsed_val == -1:
                 return -1
             return mod_dict[mod] + parsed_val
     return -1
 
 
-def parsemodval(mod_val):
+def parse_mod_val(mod_val):
     if mod_val == 0:
         return "None"
     mods = ""
@@ -141,3 +151,58 @@ def get_map(api_key, id):
 
     map = requests.get("https://osu.ppy.sh/api/get_beatmaps", params=params).json()[0]
     return map
+
+
+def get_scores(api_key, user):
+
+    params = {"k": api_key,
+              "u": user,
+              "m": 0,
+              "limit": 25}
+
+    scores = requests.get("https://osu.ppy.sh/api/get_user_best", params=params).json()
+    return scores
+
+
+def get_user(api_key, user):
+
+    params = {"k": api_key,
+              "u": user,
+              "m": 0}
+
+    user = requests.get("https://osu.ppy.sh/api/get_user", params=params).json()[0]
+    return user
+
+
+async def get_map_between(api_key, min_pp, max_pp, mod_val, acc, max_length):
+
+    count = 0
+
+    while True:
+
+        year = randint(2010, 2022)
+        month = randint(1, 12)
+        day = randint(1, 28)
+        if month < 10:
+            month = '0' + str(month)
+        if day < 10:
+            day = '0' + str(day)
+        start_date = f'{year}-{month}-{day}'
+
+        params = {"k": api_key,
+                  "m": 0,
+                  "since": start_date}
+
+        beatmaps = requests.get("https://osu.ppy.sh/api/get_beatmaps", params=params).json()
+
+        for map in beatmaps:
+            if map["approved"] != '1' or int(map['total_length']) > max_length:
+                continue
+            combo = int(map['max_combo'])
+            prediction = predict(map, acc, combo, mod_val)
+
+            if prediction > min_pp and prediction < max_pp:
+                return (map, prediction)
+
+        count += 500
+        print(f"processed {count} beatmaps")
