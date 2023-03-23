@@ -3,7 +3,6 @@ import info
 import requests
 import numpy as np
 from joblib import load
-import pickle
 from sklearn.preprocessing import PolynomialFeatures
 
 red=info.colors['red']
@@ -56,7 +55,6 @@ def parsemods(mods):
             if parsed_val == -1:
                 return -1
             return mod_dict[mod] + parsed_val
-    
     return -1
 
 def parsemodval(mod_val):
