@@ -9,22 +9,22 @@ from sklearn.preprocessing import PolynomialFeatures
 red=info.colors['red']
 pink=info.colors['pink']
 
-async def send_error(message, text):
-    return await send_embed(message=message, text=text, color='red', title="Error")
+async def send_error(interaction, text):
+    return await send_embed(interaction=interaction, text=text, color='red', title="Error")
 
-async def send_embed(message, text, color='pink', title="", thumbnail=None, image=None):
+async def send_embed(interaction, text, color='pink', title="", thumbnail=None, image=None):
     embed = discord.Embed(title=title, color=info.colors[color], description=text)
     if image is not None:
         embed.set_image(url=image)
     if thumbnail is not None:
         embed.set_thumbnail(url=thumbnail)
-    return await message.channel.send(embed=embed)
+    return await interaction.response.send_message(embed=embed)
 
-async def calc(message, mods, link, acc, combo, api_key):
+async def calc(interaction, link, mods, acc, combo, api_key):
     
     if 'osu.ppy.sh' not in link:
         text = f'"{link}" is not a valid osu beatmap link, please try again'
-        return await send_error(message, text)
+        return await send_error(interaction, text)
     
     id = int(link.split('/')[-1])
 
@@ -35,12 +35,12 @@ async def calc(message, mods, link, acc, combo, api_key):
     mod_val = parsemods(mods)
     if mod_val == -1:
         text = f"{mods} is not a valid mod input, see usage:\n{info.calc_instr}"
-        return await send_error(message, text)
+        return await send_error(interaction, text)
     prediction = predict(map, acc, combo, mod_val)
 
     text = f"Estimated pp: {prediction}"
     
-    return await send_embed(message=message, text=text)
+    return await send_embed(interaction=interaction, text=text)
 
 def parsemods(mods):
     mod_dict = {"hd": 8, "dt": 64, "hr": 16, "fl": 1024}
@@ -108,11 +108,17 @@ def acc(score):
     total = perf+mid+low+miss
     acc = float(300*perf+100*mid+50*low)/(300*total)
     return acc
+    
+def parse_params(params):
+    out = {}
+    for param in params:
+        out[param['name']] = param['value']
+    return out
 
-def get_best(api_key, username):
+def get_best(api_key, user):
 
     params = {"k": api_key,
-              "u": username, 
+              "u": user, 
               "m": 0,
               "limit": 1}
     best = requests.get(f"https://osu.ppy.sh/api/get_user_best", params=params).json()

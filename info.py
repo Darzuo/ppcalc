@@ -1,21 +1,19 @@
-help_instr = '**!pp help** - displays all commands and usages \n\
-**!pp help <command>** - dispalys usage of a particular command'
-
-calc_instr = '**!pp calc <mods (optional)> <beatmap link> <acc> <combo>** - gives a pp estimate for given mods, beatmap link, accuracy (0-100), and max combo \n\
-!**pp calc <mods (optional)> <beatmap link>** - gives an SS pp estimate for a given map\n\
-Note: mods must be inputted as a combination of hd hr dt fl (ex. hdhr)'
-
-best_instr = '**!pp best <username | id>** - displays the best play for a given user'
 
 colors = {'pink': 0xff66aa, 'red': 0xff0033}
 
-param_nums = {'help': {0,1}, 'calc': {1,2,3,4}, 'best': {1}}
+help_info = 'displays all commands and usages'
+calc_info = 'gives a pp estimate for a given, beatmap, mods, accuracy, and max combo'
+best_info = 'displays the best play for a given username or user id'
+
+help_instr = f'**/pphelp** - {help_info}'
+calc_instr = f'**/ppcalc <beatmap link> <mods (optional)> <acc (optional)> <combo (optional)>** - {calc_info} \n\
+Mods must be inputted as a combination of hd hr dt fl (ex. hdhr) \n\
+If no accuracy or combo are provided, the max will be used (100%, and FC)'
+best_instr = f'**/ppbest <username | id>** - {best_info}'
 
 commands = ['help', 'calc', 'best']
 instructions = [help_instr, calc_instr, best_instr]
-
 instruction_dict = dict()
-
 for i in range(len(commands)):
     instruction_dict[commands[i]] = instructions[i]
 
@@ -31,4 +29,3 @@ Here are the commands that are currently available!
 
 {instruction_str}
 '''
-
