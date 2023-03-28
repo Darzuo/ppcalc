@@ -9,7 +9,7 @@
 
 ### Discord Bot
 * Add the bot to your server with the following link:
-  * https://discord.com/api/oauth2/authorize?client_id=1083614941476560966&permissions=277025466368&scope=applications.commands%20bot
+  * https://discord.com/api/oauth2/authorize?client_id=1083614941476560966&permissions=414464681984&scope=applications.commands%20bot
 * Here's the list of currently available commands (* means optional):
   * **/pp, /pphelp** - displays all commands and usages 
   * **/ppcalc [beatmap link] [mods\*] [accuracy\*] [combo\*]** - gives a pp estimate for a given beatmap, mods, accuracy and max combo
