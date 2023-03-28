@@ -137,10 +137,8 @@ def get_best(api_key, user):
               "u": user,
               "m": 0,
               "limit": 1}
-    best = requests.get("https://osu.ppy.sh/api/get_user_best", params=params).json()
-    if len(best) == 0:
-        return best
-    return best[0]
+    best = requests.get("https://osu.ppy.sh/api/get_user_best", params=params).json()[0]
+    return best
 
 
 def get_map(api_key, id):
@@ -206,3 +204,15 @@ async def get_map_between(api_key, min_pp, max_pp, mod_val, acc, max_length):
 
         count += 500
         print(f"processed {count} beatmaps")
+
+
+async def verify_user(interaction, api_key, user):
+    params = {"k": api_key,
+              "u": user,
+              "m": 0}
+
+    user_obj = requests.get("https://osu.ppy.sh/api/get_user", params=params).json()
+    if len(user_obj) == 0:
+        await send_error(interaction=interaction, text=f"{user} is not a valid username or user id, please try again")
+        return False
+    return True

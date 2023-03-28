@@ -29,10 +29,10 @@ async def best(interaction, params):
     api_key = os.getenv("OSU_TOKEN")
 
     user = params['user']
-    best = helpers.get_best(api_key=api_key, user=user)
-    if len(best) == 0:
-        await helpers.send_error(interaction=interaction, text=f"{user} is not a valid username or user id, please try again")
+    if not await helpers.verify_user(interaction, api_key, user):
+        return
 
+    best = helpers.get_best(api_key=api_key, user=user)
     map = helpers.get_map(api_key=api_key, id=best['beatmap_id'])
 
     mod_val = int(best['enabled_mods'])
@@ -62,6 +62,8 @@ async def rec(interaction, params):
     api_key = os.getenv("OSU_TOKEN")
 
     user = params['user']
+    if not await helpers.verify_user(interaction, api_key, user):
+        return
     mods = params['mods'] if 'mods' in params else ""
     max_length = params['max_length'] if 'max_length' in params else np.inf
     if max_length < 30:
@@ -108,7 +110,8 @@ async def user(interaction, params):
     api_key = os.getenv("OSU_TOKEN")
 
     user = params['user']
-
+    if not await helpers.verify_user(interaction, api_key, user):
+        return
     user = helpers.get_user(api_key=api_key, user=user)
 
     user_id = user['user_id']
