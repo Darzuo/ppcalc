@@ -14,7 +14,7 @@ async def send_error(interaction, text):
     return await send_embed(interaction=interaction, text=text, color='red', title="Error")
 
 
-async def send_embed(interaction, text, color='pink', title="", thumbnail=None, image=None):
+async def send_embed(interaction, text="", color='pink', title="", thumbnail=None, image=None):
     embed = discord.Embed(title=title, color=info.colors[color], description=text)
     if image is not None:
         embed.set_image(url=image)
@@ -23,7 +23,7 @@ async def send_embed(interaction, text, color='pink', title="", thumbnail=None, 
     return await interaction.response.send_message(embed=embed)
 
 
-async def followup_send_embed(interaction, text, color='pink', title="", thumbnail=None, image=None):
+async def followup_send_embed(interaction, text="", color='pink', title="", thumbnail=None, image=None):
     embed = discord.Embed(title=title, color=info.colors[color], description=text)
     if image is not None:
         embed.set_image(url=image)

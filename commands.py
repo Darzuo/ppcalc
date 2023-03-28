@@ -102,10 +102,45 @@ async def rec(interaction, params):
 
     await helpers.followup_send_embed(interaction=interaction, title=title, text=text, image=thumbnail)
 
+
+async def user(interaction, params):
+    load_dotenv()
+    api_key = os.getenv("OSU_TOKEN")
+
+    user = params['user']
+
+    user = helpers.get_user(api_key=api_key, user=user)
+
+    user_id = user['user_id']
+    username = user['username']
+    accuracy = round(float(user['accuracy']), 2)
+    playtime_seconds = int(user['total_seconds_played'])
+    m, s = divmod(playtime_seconds, 60)
+    h, m = divmod(m, 60)
+    playtime = f'{h} hours, {m} minutes, {s} seconds'
+    country = user['country'].lower()
+    country_rank = int(user['pp_country_rank'])
+    f_country_rank = f'{country_rank:,}'
+    global_rank = int(user['pp_rank'])
+    f_global_rank = f'{global_rank:,}'
+    thumbnail = f'http://s.ppy.sh/a/{user_id}'
+    pp = round(float(user['pp_raw']))
+
+    text = f'**{username}** :flag_{country}:\n\n\
+        Accuracy: {accuracy}% \n\
+        Playtime: {playtime} \n\
+        Global: #{f_global_rank} \n\
+        Country: #{f_country_rank} \n\
+        PP: {pp}'
+
+    await helpers.send_embed(interaction=interaction, text=text, image=thumbnail)
+
+
 commands = {
     "pphelp": help,
     "ppcalc": calc,
     "ppbest": best,
     "pprec": rec,
-    "pp": help
+    "pp": help,
+    "ppuser": user
 }

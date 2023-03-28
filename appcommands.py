@@ -3,6 +3,7 @@ import os
 import requests
 from dotenv import load_dotenv
 import info
+from time import sleep
 
 load_dotenv()
 
@@ -98,9 +99,23 @@ commands = [
                 "required": False
             }
         ]
-    }
+    },
+    {
+        "name": "ppuser",
+        "type": 1,
+        "description": info.user_info,
+        "options": [
+            {
+                "name": "user",
+                "description": "osu username or user id",
+                "type": 3,
+                "required": True
+            }
+        ]
+    },
 ]
 
 for command in commands:
+    sleep(0.5)
     r = requests.post(url, headers=headers, json=command)
     print(r)
