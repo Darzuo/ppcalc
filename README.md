@@ -18,3 +18,5 @@
   * **/ppbest [user]** - displays the best play for a given username or user id
   * **/pprec [user] [mods\*] [max_length\*]** - gives a mac recommendation for a user using the user's average accuracy
     * a max song duration (in seconds) may be inputted to limit results
+  * **/ppuser** - displays stats about a specific user
+    * accuracy, play time, global and country ranks, total pp
