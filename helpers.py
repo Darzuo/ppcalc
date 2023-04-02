@@ -131,6 +131,15 @@ def parse_params(params):
     return out
 
 
+def command_count_up():
+    count = -1
+    with open('stats.txt', 'r') as f:
+        file = f.read()
+        count = int(file.split(':')[1]) + 1
+    with open('stats.txt', 'w') as file:
+        file.write(f'commands executed:{count}')
+
+
 def get_best(api_key, user):
 
     params = {"k": api_key,
